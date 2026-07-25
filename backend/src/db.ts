@@ -1,0 +1,1 @@
+import { Pool } from 'pg';\nimport dotenv from 'dotenv';\n\ndotenv.config();\n\nconst pool = new Pool({\n  connectionString: process.env.DATABASE_URL,\n});\n\npool.on('error', (err) => {\n  console.error('Unexpected error on idle client', err);\n});\n\nexport default pool;\n
