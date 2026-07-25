@@ -1,6 +1,9 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import playerRoutes from './routes/players';
+import bagTagRoutes from './routes/bagTags';
+import tournamentRoutes from './routes/tournaments';
 
 dotenv.config();
 
@@ -16,12 +19,18 @@ app.get('/health', (req, res) => {
   res.json({ status: 'API is running' });
 });
 
-// API Routes (to be implemented)
-app.get('/api/players', (req, res) => {
-  res.json({ message: 'Players endpoint' });
+// API Routes
+app.use('/api/players', playerRoutes);
+app.use('/api/bag-tags', bagTagRoutes);
+app.use('/api/tournaments', tournamentRoutes);
+
+// 404 handler
+app.use((req, res) => {
+  res.status(404).json({ error: 'Endpoint not found' });
 });
 
 // Start server
 app.listen(PORT, () => {
   console.log(`🚀 API Server running on port ${PORT}`);
+  console.log(`📚 API Documentation: http://localhost:${PORT}/api`);
 });
